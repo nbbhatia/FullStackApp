@@ -7,7 +7,7 @@ import { withStyles } from "@material-ui/core/styles";
 
 import Form from "./form";
 import { validation } from "./validation.js";
-// import { ApplyNowAction } from "../../../store/actions/careeractions/applynow.action";
+import { signUp } from "../../store/action/signupaction";
 const style = (theme) => ({
   paper: {
     background: "#fff",
@@ -47,50 +47,37 @@ const style = (theme) => ({
   },
 });
 
-class signUp extends Component {
+class signUpForm extends Component {
   state = {
     submit: false,
     resume: "",
   };
 
   render() {
-    const { open, close, classes, _applyNow, jobTitle } = this.props;
+    const { open, close, classes, _signUp, jobTitle } = this.props;
+    console.log("_signUp", _signUp);
     const initialval = {
       fullName: "",
-      phoneNumber: "",
       Email: "",
-      Resume: "",
-      Qualification: "",
-      Grade: "",
-      NoticePeriod: "",
-      Profiles: "",
-      CurrentCTC: "",
-      Experience: "",
-      ExpectedCTC: "",
+      phoneNumber: "",
+      Password: "",
+      ConfirmPassword: "",
     };
-    // let vacancy = jobTitle.title;
-    // resume file event
+
     const handleFile = (url) => {
       this.setState({
         resume: url,
       });
     };
-    // form submit
+
     const handleSubmit = (val) => {
-      // this.props.ApplyNowAction({
-      //   name: val.fullName,
-      //   phone: val.phoneNumber,
-      //   email: val.Email,
-      //   resumeUrl: this.state.resume,
-      //   qualification: val.Qualification,
-      //   grade: val.Grade,
-      //   previousProfile: val.Profiles,
-      //   TotalExperince: val.Experience,
-      //   CurrentCTC: val.CurrentCTC,
-      //   ExpectedCTC: val.ExpectedCTC,
-      //   NoticePeriod: val.NoticePeriod,
-      //   job: jobTitle._id,
-      // });
+      this.props.signUp({
+        fullName: val.fullName,
+        email: val.Email,
+        PhoneNumber: val.phoneNumber,
+        Password: val.Password,
+        ConfirmPassword: val.ConfirmPassword,
+      });
       this.setState({
         submit: true,
       });
@@ -98,22 +85,27 @@ class signUp extends Component {
 
     return (
       <Grid md={12} sm={12} xs={12} item container>
-        <Formik
-          initialValues={initialval}
-          close={close}
-          onSubmit={handleSubmit}
-          validationSchema={validation}
-        >
-          {(props) => <Form {...props} ResumeFile={(url) => handleFile(url)} />}
-        </Formik>
+        <Grid md={2} />
+        <Grid md={8} item container justify="center">
+          <Formik
+            initialValues={initialval}
+            close={close}
+            onSubmit={handleSubmit}
+            validationSchema={validation}
+          >
+            {(props) => (
+              <Form {...props} ResumeFile={(url) => handleFile(url)} />
+            )}
+          </Formik>
+        </Grid>
+        <Grid md={2} />
       </Grid>
     );
   }
 }
-// const mapStateToProps = ({ ApplyNowReducer }) => {
-//   return { _applyNow: ApplyNowReducer };
-// };
-// export default withRouter(
-//   connect(mapStateToProps, { ApplyNowAction })(withStyles(style)(ApplyNow))
-// );
-export default withStyles(style)(signUp);
+const mapStateToProps = ({ SignUpReducer }) => {
+  return { _signUp: SignUpReducer };
+};
+export default withRouter(
+  connect(mapStateToProps, { signUp })(withStyles(style)(signUpForm))
+);

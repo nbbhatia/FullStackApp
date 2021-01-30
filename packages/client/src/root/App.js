@@ -2,8 +2,7 @@ import "./App.css";
 import Components from "../routers/index.router";
 function App() {
   return (
-    <div className="App">
-      <h1>login</h1>
+    <div style={{ height: "100vh", textAlign: "center", marginTop: 200 }}>
       <Components />
     </div>
   );

@@ -7,7 +7,7 @@ import { withStyles } from "@material-ui/core/styles";
 
 import Form from "./form";
 import { validation } from "./validation.js";
-import { signUp } from "../../store/action/signupaction";
+import { login } from "../../store/action/signupaction";
 const style = (theme) => ({
   paper: {
     background: "#fff",
@@ -51,17 +51,15 @@ class signUpForm extends Component {
   state = {
     submit: false,
     resume: "",
+    login: false,
   };
 
   render() {
-    const { open, close, classes, _signUp, jobTitle } = this.props;
+    const { open, close, classes, _login, jobTitle } = this.props;
 
     const initialval = {
-      fullName: "",
       Email: "",
-      phoneNumber: "",
       Password: "",
-      ConfirmPassword: "",
     };
 
     const handleFile = (url) => {
@@ -71,14 +69,11 @@ class signUpForm extends Component {
     };
 
     const handleSubmit = (val) => {
-      this.props.signUp({
-        fullName: val.fullName,
+      this.props.login({
         email: val.Email,
-        PhoneNumber: val.phoneNumber,
         Password: val.Password,
-        ConfirmPassword: val.ConfirmPassword,
       });
-      console.log("val", val);
+
       this.setState({
         submit: true,
       });
@@ -86,31 +81,29 @@ class signUpForm extends Component {
 
     return (
       <Grid md={12} sm={12} xs={12} item container justify="center">
-        {/* <Grid md={2} /> */}
-
         <Grid md={8} item container justify="center">
-          <Typography>Admin Sign in</Typography>
+          <Grid md={12} container item justify="center">
+            <Typography style={{ fontSize: 20 }}>Login</Typography>
+          </Grid>
           <Formik
             initialValues={initialval}
             close={close}
             onSubmit={handleSubmit}
             validationSchema={validation}
+            response={this.state.login}
           >
             {(props) => (
               <Form {...props} ResumeFile={(url) => handleFile(url)} />
             )}
           </Formik>
-          <Typography>
-            If you have already Account <a href="/login">Login</a>
-          </Typography>
         </Grid>
       </Grid>
     );
   }
 }
-const mapStateToProps = ({ SignUpReducer }) => {
-  return { _signUp: SignUpReducer };
+const mapStateToProps = ({ LoginReducer }) => {
+  return { _login: LoginReducer };
 };
 export default withRouter(
-  connect(mapStateToProps, { signUp })(withStyles(style)(signUpForm))
+  connect(mapStateToProps, { login })(withStyles(style)(signUpForm))
 );

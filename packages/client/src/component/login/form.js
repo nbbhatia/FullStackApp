@@ -142,34 +142,15 @@ const Form = (props) => {
   const [size, setsize] = useState();
   // initial state
   let {
-    values: { fullName, Email, phoneNumber, Password, ConfirmPassword },
+    values: { Email, Password },
     errors,
     touched,
     handleSubmit,
     handleChange,
-    ResumeFile,
-    setFieldValue,
   } = props;
 
   // resume file handle
-  const uploadResume = (e) => {
-    e.persist();
-    var file = e.target.files[0];
-    console.log("file", file);
-    if (e.target.files[0] === null) {
-      return null;
-    } else if (file) {
-      console.log("file.name", file.name);
-      ResumeFile(file);
-      setFieldValue("Resume", file.name);
-    }
 
-    if (file.size > 1048576) {
-      setsize(true);
-    } else {
-      setsize(false);
-    }
-  };
   const [hover, sethover] = useState(false);
   // button hover animation
   const handleMouse = () => {
@@ -183,27 +164,6 @@ const Form = (props) => {
       <Grid md={12} xs={12} sm={12} item container justify="center">
         <Grid md={2} />
         <Grid md={8}>
-          <TextField
-            name="fullName"
-            label="Full Name"
-            variant="outlined"
-            fullWidth
-            helperText={touched.fullName ? errors.fullName : ""}
-            error={touched.fullName && Boolean(errors.fullName)}
-            value={fullName}
-            onChange={handleChange}
-            className={classes.textField}
-            fullWidth
-            InputProps={{
-              className: classes.input,
-            }}
-            InputLabelProps={{
-              className: classes.labelstyle,
-            }}
-            FormHelperTextProps={{
-              className: classes.helperText,
-            }}
-          />
           <TextField
             name="Email"
             variant="outlined"
@@ -226,26 +186,6 @@ const Form = (props) => {
           />
 
           <TextField
-            name="phoneNumber"
-            label="Phone Number"
-            variant="outlined"
-            helperText={touched.phoneNumber ? errors.phoneNumber : ""}
-            error={touched.phoneNumber && Boolean(errors.phoneNumber)}
-            value={phoneNumber}
-            className={classes.textField}
-            onChange={handleChange}
-            fullWidth
-            InputProps={{
-              className: classes.input,
-            }}
-            InputLabelProps={{
-              className: classes.labelstyle,
-            }}
-            FormHelperTextProps={{
-              className: classes.helperText,
-            }}
-          />
-          <TextField
             type="password"
             name="Password"
             label="Password"
@@ -254,28 +194,6 @@ const Form = (props) => {
             helperText={touched.Password ? errors.Password : ""}
             error={touched.Password && Boolean(errors.Password)}
             value={Password}
-            onChange={handleChange}
-            className={classes.textField}
-            fullWidth
-            InputProps={{
-              className: classes.input,
-            }}
-            InputLabelProps={{
-              className: classes.labelstyle,
-            }}
-            FormHelperTextProps={{
-              className: classes.helperText,
-            }}
-          />
-          <TextField
-            type="pwd"
-            name="ConfirmPassword"
-            label="ConfirmPassword"
-            variant="outlined"
-            fullWidth
-            helperText={touched.ConfirmPassword ? errors.ConfirmPassword : ""}
-            error={touched.ConfirmPassword && Boolean(errors.ConfirmPassword)}
-            value={ConfirmPassword}
             onChange={handleChange}
             className={classes.textField}
             fullWidth

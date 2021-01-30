@@ -1,17 +1,21 @@
 const express = require("express");
 const router = new express.Router();
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 const UserModel = require("../models/signUp.model");
 router.post("/createUser", async (req, res) => {
   try {
     let data = new UserModel(req.body);
-    console.log("data", req.body);
+
+    const token = await data.generateAuthToken();
+
     const saveData = await data.save();
     res.send(saveData);
   } catch (err) {
     console.log("err", err);
   }
 });
+
 router.get("/getData", async (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   try {
@@ -21,6 +25,7 @@ router.get("/getData", async (req, res) => {
     res.send(err);
   }
 });
+// hashing
 
 // const securePassword = async (password) => {
 //   const secpas = await bcrypt.hash(password, 10);

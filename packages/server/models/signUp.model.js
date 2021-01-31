@@ -44,7 +44,7 @@ userSchema.methods.generateAuthToken = async function () {
       {
         _id: this._id.toString(),
       },
-      "sassasasasasasasasasasasasasasasasasasaassa"
+      process.env.SECRET_KEY
     );
     this.tokens = this.tokens.concat({ token: newToken });
     await this.save();

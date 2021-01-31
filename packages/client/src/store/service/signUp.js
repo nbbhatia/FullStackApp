@@ -7,7 +7,7 @@ export const signUp = (req) => {
 
   return axios({
     method: "POST",
-    url: "http://localhost:8084/createUser",
+    url: "http://localhost:8085/createUser",
     data: req.data,
     headers: headers,
   })
@@ -27,7 +27,7 @@ export const LoginService = (req) => {
 
   return axios({
     method: "POST",
-    url: "http://localhost:8084/login",
+    url: "http://localhost:8085/login",
     data: req.data,
     headers: headers,
   })
